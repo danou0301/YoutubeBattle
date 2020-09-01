@@ -110,8 +110,8 @@ class HomePage extends React.Component {
 
 
             <div className="buttons">
-                <Header as='h3' color='red'></Header>
-                <Header as='h3' color='red'></Header>
+                <div/>
+                <Header as='h3'> Clique sur la video qui a le plus de vue</Header>
                 <Header as='h3' color='red'>Score 0/0</Header>
             </div>
             {/* <img src={logoYt} /> */}

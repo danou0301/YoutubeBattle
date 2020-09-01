@@ -17,8 +17,10 @@
     margin-top: 20px;
     margin-left:20px;
     margin-right:20px;
-
-
+}
+.buttons .explain {
+    font-size: 15;
+    font-weight: bold;
 }
 .mainHomePage   h1 {
     color: #FF0000;
