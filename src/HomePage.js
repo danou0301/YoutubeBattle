@@ -3,6 +3,8 @@ import CountUp from 'react-countup';
 import { Card, Icon, Image, Header, Button } from 'semantic-ui-react'
 
 import { getLanguage, translate } from 'react-multi-lang'
+import axios from 'axios'
+
 import "./HomePage.css"
 import 'semantic-ui-css/semantic.min.css'
 
@@ -15,6 +17,8 @@ const add = require('./img/more.png');
 
 
 // color c93a33
+// getBattle: https://gik5oo2jc8.execute-api.eu-west-3.amazonaws.com/default
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -37,6 +41,13 @@ class HomePage extends React.Component {
 
     }
     componentDidMount() {
+
+
+        axios.get("https://gik5oo2jc8.execute-api.eu-west-3.amazonaws.com/default/getBattles")
+        .then(response => {
+          console.log(response.data);
+        });
+
         this.setState({ dataOne: {name:"Masha & Mishka", url:"", count:30*10**9}})
         this.setState({ dataTwo: {name:"DADJU - Reine (Clip Officiel)", url:"", count:27*10**9}})
         if (this.state.dataOne.count > this.state.dataTwo.count) {
@@ -82,9 +93,9 @@ class HomePage extends React.Component {
 
 
             <div className="buttons">
-                <Header as='h3' right color='red'></Header>
-                <Header as='h3' right color='red'></Header>
-                <Header as='h2' right color='red'>Score 0/0</Header>
+                <Header as='h3' color='red'></Header>
+                <Header as='h3' color='red'></Header>
+                <Header as='h2' color='red'>Score 0/0</Header>
 
             </div>
             {/* <img src={logoYt} /> */}
