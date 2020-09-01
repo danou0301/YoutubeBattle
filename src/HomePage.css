@@ -1,0 +1,131 @@
+
+.mainHomePage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.banner {
+    background-color: #ffffff;
+    padding: 25px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    margin-top: 20px;
+    margin-left:20px;
+    margin-right:20px;
+
+
+}
+.mainHomePage   h1 {
+    color: #FF0000;
+    font-family: "Arial";
+    font-weight: 300;
+    font-size: 50px
+
+}
+
+.choice {
+    margin-top: 7vh;
+}
+
+hr.solid {
+    border-top: 3px solid #282828;
+    margin-left: 15px;
+    margin-right: 15px;
+    border-radius: 5px;
+
+}
+
+/* Main container */
+.choice .card {
+    position: relative;
+    width: 40vw;
+    margin-left: 2vh;
+
+}
+
+
+/* Original image */
+.overlay-image img {
+    width: 100%;
+    height: auto;
+}
+/* Original text overlay */
+.overlay-image .text {
+    color: #fff;
+    font-size: 30px;
+    line-height: 1.5em;
+    text-shadow: 2px 2px 2px #000;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+   }
+
+/* New overlay on hover */
+.overlay-image .hover {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    transition: .5s ease;
+    cursor:pointer;
+
+}
+/* New overlay appearance on hover */
+.overlay-image:hover .hover {
+    opacity: 0;
+}
+.overlay-image .normal {
+    transition: .5s ease;
+}
+.overlay-image:hover .normal {
+    opacity: 1;
+}
+.overlay-image .hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.count {
+    font-size: 30px;
+    color:black;
+}
+
+.buttons {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.buttons .add {
+    width: 45px;
+    height: 45px;
+    margin-top: 8vh;
+    cursor:pointer;
+    
+}
+.buttons .refresh{
+    width: 60px;
+    height: 60px;
+    margin-top: 8vh;
+    cursor:pointer;
+}
+.buttons .none{
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+}
+.score {
+    position:absolute;
+    top:50;
+    left: 80%;
+}
