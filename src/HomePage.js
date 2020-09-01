@@ -9,7 +9,7 @@ import "./HomePage.css"
 import 'semantic-ui-css/semantic.min.css'
 
 
-const one = require('./img/th-masha.jpg')
+const one = require('./img/th-masha.jpg');
 const two = require('./img/th-reine.jpg');
 const logoYt= require('./img/logo.png');
 const next = require('./img/refresh.png');
@@ -32,10 +32,10 @@ class HomePage extends React.Component {
             width: 0, 
             height: 0, 
             lang: getLanguage(),
-            dataOne: {},
-            dataTwo: {},
             winnerOne: null,
-            userBet: false 
+            userBet: false,
+            currPlay:0,
+            dataList:null
         };
         
 
@@ -45,17 +45,18 @@ class HomePage extends React.Component {
 
         axios.get("https://gik5oo2jc8.execute-api.eu-west-3.amazonaws.com/default/getBattles")
         .then(response => {
-          console.log(response.data);
+            this.setState({dataList: response.data.body.Items})
+            console.log(response.data.body.Items);
+
+            if (parseInt(this.state.dataList[this.state.currPlay].countOne) > parseInt( this.state.dataList[this.state.currPlay].countTwo) ){
+                this.setState({winnerOne:true})
+                console.log("1 ", parseInt(this.state.dataList[this.state.currPlay].countOne))
+            } else {
+                this.setState({winnerOne:false})
+                console.log("2", parseInt( this.state.dataList[this.state.currPlay].countTwo))
+            }
         });
-
-        this.setState({ dataOne: {name:"Masha & Mishka", url:"", count:30*10**9}})
-        this.setState({ dataTwo: {name:"DADJU - Reine (Clip Officiel)", url:"", count:27*10**9}})
-        if (this.state.dataOne.count > this.state.dataTwo.count) {
-            this.setState({winnerOne:true})
-        } else {
-            this.setState({winnerOne:false})
-        }
-
+        
     }
     
     componentWillUnmount() {
@@ -64,15 +65,23 @@ class HomePage extends React.Component {
 
 
     handleClickOne = () => { 
-        console.log("click one")
         this.setState({userBet:true})
     }
     handleClickTwo = () => { 
-        console.log("click two")
         this.setState({userBet:true})
     }
     handleNext = () => { 
-        this.setState({userBet:false})
+        if (this.state.currPlay+ 1 == this.state.dataList.length){
+            return;
+        }
+        if (parseInt(this.state.dataList[this.state.currPlay+1].countOne) > parseInt( this.state.dataList[this.state.currPlay+1].countTwo) ){
+            this.setState({winnerOne:true})
+        } else {
+            this.setState({winnerOne:false})
+        }
+        this.setState({userBet:false, currPlay: this.state.currPlay + 1})
+
+        
     }
     handleAdd = () => { 
         console.log("Add")
@@ -81,6 +90,14 @@ class HomePage extends React.Component {
     }
 
     render() {
+
+        if (!this.state.dataList) {
+            return (<div></div>)
+        }
+        if (this.state.dataList.length < this.state.currPlay + 1) {
+            this.setState({currPlay:0})
+            return (<div>Finish</div>)
+        }
 
         return (
         <div className="mainHomePage">
@@ -95,20 +112,19 @@ class HomePage extends React.Component {
             <div className="buttons">
                 <Header as='h3' color='red'></Header>
                 <Header as='h3' color='red'></Header>
-                <Header as='h2' color='red'>Score 0/0</Header>
-
+                <Header as='h3' color='red'>Score 0/0</Header>
             </div>
             {/* <img src={logoYt} /> */}
 
             <div className="choice">
             <Card.Group itemsPerRow={2} centered>
 
-                <Card onClick={this.handleClickOne} style={{width:"42%"}}>
-                    <Image src={one} wrapped ui={false} />
+                <Card onClick={this.handleClickOne} style={{width:"35%",}}>
+                    <Image src={this.state.dataList[this.state.currPlay].urlOne} wrapped ui={false} />
                     <Card.Content>
-                        <Card.Header>{this.state.dataOne.name}</Card.Header>
+                        <Card.Header>{this.state.dataList[this.state.currPlay].titleOne}</Card.Header>
                         <Card.Meta>
-                            <span className='date'>2015</span>
+                            <span className='date'>{this.state.dataList[this.state.currPlay].dateOne}</span>
                         </Card.Meta>
                         <Card.Description>
                         {"Description"}
@@ -119,20 +135,20 @@ class HomePage extends React.Component {
                     <Card.Content extra>
                         <CountUp className=" count "
                             start={0}
-                            end={this.state.dataOne.count}
-                            duration={!this.state.winnerOne ? 2.5 : 1.75}
+                            end={this.state.dataList[this.state.currPlay].countOne}
+                            duration={!this.state.winnerOne ?  1.75 : 2.5}
                             separator=" "    
                         />
                     </Card.Content>
                     }
                 </Card>
 
-                <Card  onClick={this.handleClickTwo} style={{width:"42%"}}>
-                    <Image src={two} wrapped ui={false} />
+                <Card  onClick={this.handleClickTwo} style={{width:"35%"}}>
+                    <Image src={this.state.dataList[this.state.currPlay].urlTwo} wrapped ui={false} />
                     <Card.Content>
-                        <Card.Header>{this.state.dataTwo.name}</Card.Header>
+                        <Card.Header>{this.state.dataList[this.state.currPlay].titleTwo}</Card.Header>
                         <Card.Meta>
-                            <span className='date'>2019</span>
+                            <span className='date'>{this.state.dataList[this.state.currPlay].dateTwo}</span>
                         </Card.Meta>
                         <Card.Description>
                         {"Description"}
@@ -143,8 +159,8 @@ class HomePage extends React.Component {
                     <Card.Content extra>
                         <CountUp className=" count "
                             start={0}
-                            end={this.state.dataTwo.count}
-                            duration={!this.state.winnerOne ? 1.75 : 2.5}
+                            end={this.state.dataList[this.state.currPlay].countTwo}
+                            duration={!this.state.winnerOne ? 2.5 : 1.75}
                             separator=" "    
                         />
                     </Card.Content>
@@ -155,9 +171,13 @@ class HomePage extends React.Component {
             </div>
 
         <div className="buttons">
-            <img className="none" src={add} />
+            <div />
             <img className="refresh" src={next} onClick={this.handleNext}/>
             <img className="add" src={add} onClick={this.handleAdd}/>
+        </div>
+
+        <div className="footer">
+
         </div>
 
 

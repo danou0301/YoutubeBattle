@@ -1,3 +1,18 @@
 .AddPage .form {
     padding:25px
 }
+
+.AddPage .banner{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.AddPage .returnHome {
+    width: 40px;
+    height: 40px;
+    margin-top: 20px;
+    cursor: pointer;
+}
