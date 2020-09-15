@@ -22,12 +22,15 @@
     font-size: 15;
     font-weight: bold;
 }
-.mainHomePage   h1 {
+.mainHomePage  h1 {
     color: #FF0000;
     font-family: "Arial";
     font-weight: 300;
     font-size: 50px
+}
 
+.cardOne {
+    background-color: #2B4B64;
 }
 
 .choice {
@@ -65,9 +68,9 @@ hr.solid {
     
 }
 .buttons .refresh{
-    width: 60px;
-    height: 60px;
-    margin-top: 8vh;
+    width: 65px;
+    height: 65px;
+    margin-top: 6vh;
     cursor:pointer;
 }
 

@@ -29,7 +29,7 @@ class AddPage extends React.Component {
             linkTwo: "", 
             idTwo:"",
             lang: getLanguage(),
-            send:true
+            send:false
         };
         
 

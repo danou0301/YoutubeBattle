@@ -4,6 +4,8 @@ import { Card, Icon, Image, Header, Button } from 'semantic-ui-react'
 
 import { getLanguage, translate } from 'react-multi-lang'
 import axios from 'axios'
+import YouTube from 'react-youtube';
+
 
 import "./HomePage.css"
 import 'semantic-ui-css/semantic.min.css'
@@ -12,7 +14,7 @@ import 'semantic-ui-css/semantic.min.css'
 const one = require('./img/th-masha.jpg');
 const two = require('./img/th-reine.jpg');
 const logoYt= require('./img/logo.png');
-const next = require('./img/refresh.png');
+const next = require('./img/arrow.png');
 const add = require('./img/more.png');
 
 
@@ -29,13 +31,16 @@ class HomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            width: 0, 
-            height: 0, 
+
             lang: getLanguage(),
             winnerOne: null,
             userBet: false,
             currPlay:0,
-            dataList:null
+            dataList:null,
+            colorCardOne:"white",
+            colorCardTwo:"white",
+            score:0
+
         };
         
 
@@ -65,21 +70,29 @@ class HomePage extends React.Component {
 
 
     handleClickOne = () => { 
-        this.setState({userBet:true})
+        if (this.state.winnerOne) {
+            this.setState({userBet:true, colorCardOne:"green", score:this.state.score + 1})
+        } else {
+            this.setState({userBet:true, colorCardOne:"red"})
+        }
     }
     handleClickTwo = () => { 
-        this.setState({userBet:true})
+        if (this.state.winnerOne) {
+            this.setState({userBet:true, colorCardTwo:"red"})
+        } else {
+            this.setState({userBet:true, colorCardTwo:"green", score:this.state.score + 1})
+        }
     }
     handleNext = () => { 
-        if (this.state.currPlay+ 1 == this.state.dataList.length){
+        if (this.state.currPlay + 1 == this.state.dataList.length){
             return;
         }
         if (parseInt(this.state.dataList[this.state.currPlay+1].countOne) > parseInt( this.state.dataList[this.state.currPlay+1].countTwo) ){
-            this.setState({winnerOne:true})
+            this.setState({winnerOne:true,})
         } else {
             this.setState({winnerOne:false})
         }
-        this.setState({userBet:false, currPlay: this.state.currPlay + 1})
+        this.setState({userBet:false, currPlay: this.state.currPlay + 1, colorCardOne:"white", colorCardTwo:"white"})
 
         
     }
@@ -111,17 +124,18 @@ class HomePage extends React.Component {
 
             <div className="buttons">
                 <div/>
-                <Header as='h3'> Clique sur la video qui a le plus de vue</Header>
-                <Header as='h3' color='red'>Score 0/0</Header>
+                <Header centered as='h3'> Clique sur la video qui a le plus de vue</Header>
+                <Header as='h3' color='red'>Score {this.state.score} / {this.state.currPlay + 1}</Header>
             </div>
             {/* <img src={logoYt} /> */}
 
             <div className="choice">
             <Card.Group itemsPerRow={2} centered>
 
-                <Card onClick={this.handleClickOne} style={{width:"35%",}}>
-                    <Image src={this.state.dataList[this.state.currPlay].urlOne} wrapped ui={false} />
-                    <Card.Content>
+                <Card className="cardOne" onClick={this.handleClickOne} style={{width:"35%",}} color={this.state.colorCardOne}>
+                    <YouTube videoId={this.state.dataList[this.state.currPlay].idOne} opts={{ width: window.innerWidth*0.35}}/>
+
+                    <Card.Content >
                         <Card.Header>{this.state.dataList[this.state.currPlay].titleOne}</Card.Header>
                         <Card.Meta>
                             <span className='date'>{this.state.dataList[this.state.currPlay].dateOne}</span>
@@ -143,8 +157,8 @@ class HomePage extends React.Component {
                     }
                 </Card>
 
-                <Card  onClick={this.handleClickTwo} style={{width:"35%"}}>
-                    <Image src={this.state.dataList[this.state.currPlay].urlTwo} wrapped ui={false} />
+                <Card  onClick={this.handleClickTwo} style={{width:"35%"}} color={this.state.colorCardTwo}>
+                <YouTube videoId={this.state.dataList[this.state.currPlay].idTwo} opts={{ width: window.innerWidth*0.35}}/>
                     <Card.Content>
                         <Card.Header>{this.state.dataList[this.state.currPlay].titleTwo}</Card.Header>
                         <Card.Meta>
