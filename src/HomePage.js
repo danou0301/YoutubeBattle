@@ -5,7 +5,7 @@ import { Card, Icon, Image, Header, Button } from 'semantic-ui-react'
 import { getLanguage, translate } from 'react-multi-lang'
 import axios from 'axios'
 import YouTube from 'react-youtube';
-
+import {getBattles_API} from "./API_Func"
 
 import "./HomePage.css"
 import 'semantic-ui-css/semantic.min.css'
@@ -48,7 +48,7 @@ class HomePage extends React.Component {
     componentDidMount() {
 
 
-        axios.get("https://gik5oo2jc8.execute-api.eu-west-3.amazonaws.com/default/getBattles")
+        axios.get(getBattles_API)
         .then(response => {
             this.setState({dataList: response.data.body.Items})
             console.log(response.data.body.Items);

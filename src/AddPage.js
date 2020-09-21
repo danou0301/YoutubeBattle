@@ -3,6 +3,8 @@ import React from 'react'
 import { Input, Icon, Image, Header, Button, Form, Checkbox } from 'semantic-ui-react'
 import YouTube from 'react-youtube';
 import axios from 'axios'
+import {addBattles_API} from "./API_Func"
+
 
 import { getLanguage, translate } from 'react-multi-lang'
 import "./AddPage.css"
@@ -67,7 +69,7 @@ class AddPage extends React.Component {
         console.log(this.state.idOne, this.state.idTwo)
         if (this.state.idOne != "" && this.state.idTwo != "") {
 
-            axios.post("https://io7ey3tcg2.execute-api.eu-west-3.amazonaws.com/default/addBattle?idOne="+ this.state.idOne +"&idTwo=" + this.state.idTwo + "&username="+ this.state.username)
+            axios.post( addBattles_API + "?idOne="+ this.state.idOne +"&idTwo=" + this.state.idTwo + "&username="+ this.state.username)
             .then(response => {
                 console.log(response.data)
                 if (response.data.status == "ok"){
