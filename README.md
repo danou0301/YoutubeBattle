@@ -1,5 +1,7 @@
 Youtube Battle website.
+
 I develope a game on a react website, you have to guess witch video has more views.
+
 Users can also submit a proposition to new youtuble challenge by just providing two youtube videos path.
 
 
