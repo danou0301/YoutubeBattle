@@ -6,7 +6,7 @@
 
 
 ------------------
-Run
+Run locally
 
 ### `yarn start`
 
