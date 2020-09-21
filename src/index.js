@@ -11,7 +11,7 @@ ReactDOM.render(
 
 <HashRouter>
   <Helmet>
-        <title>yt-views</title>
+        <title>Youtube Battles</title>
         <meta name="description" content="How many views ?" />
   
     </Helmet>
